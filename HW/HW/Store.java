@@ -81,7 +81,7 @@ public class Store {
         if (keySet.isEmpty()) {
             keySet.add(0);
         }
-        int keyNum = Collections.max(keySet) + 1;
+        Integer keyNum = Collections.max(keySet) + 1;
         keySet.add(keyNum);
         return keyNum;
     }
@@ -89,12 +89,16 @@ public class Store {
     static HashMap<Integer, NoteBook> getCustomerMap(HashMap<Integer, NoteBook> storeMap,
             HashMap<Integer, String> custom_filter_map) {
         HashMap<Integer, NoteBook> customerMap = new HashMap<>(0);
-        customerMap = (HashMap<Integer, NoteBook>) storeMap.clone();
+        for (Entry<Integer, NoteBook> entry : storeMap.entrySet()) {
+            customerMap.put(entry.getKey(), entry.getValue());
+        }
+        // customerMap = (HashMap<Integer, NoteBook>) storeMap.clone();
         for (Entry<Integer, String> entry_f : custom_filter_map.entrySet()) {
             for (Entry<Integer, NoteBook> entry_m : storeMap.entrySet()) {
                 switch (entry_f.getKey()) {
                     case 1:
-                        if (!entry_m.getValue().manufacturer.equalsIgnoreCase(entry_f.getValue())) {
+                        if (!entry_m.getValue().manufacturer.equalsIgnoreCase(entry_f.getValue())
+                                && !entry_f.getValue().equals("")) {
                             customerMap.remove(entry_m.getKey());
                         }
                         break;
@@ -104,7 +108,8 @@ public class Store {
                         }
                         break;
                     case 3:
-                        if (!entry_m.getValue().processor.equalsIgnoreCase(entry_f.getValue())) {
+                        if (!entry_m.getValue().processor.equalsIgnoreCase(entry_f.getValue())
+                                && !entry_f.getValue().equals("")) {
                             customerMap.remove(entry_m.getKey());
                         }
                         break;
@@ -119,12 +124,14 @@ public class Store {
                         }
                         break;
                     case 6:
-                        if (!entry_m.getValue().os.equalsIgnoreCase(entry_f.getValue())) {
+                        if (!entry_m.getValue().os.equalsIgnoreCase(entry_f.getValue())
+                                && !entry_f.getValue().equals("")) {
                             customerMap.remove(entry_m.getKey());
                         }
                         break;
                     case 7:
-                        if (!entry_m.getValue().color.equalsIgnoreCase(entry_f.getValue())) {
+                        if (!entry_m.getValue().color.equalsIgnoreCase(entry_f.getValue())
+                                && !entry_f.getValue().equals("")) {
                             customerMap.remove(entry_m.getKey());
                         }
                         break;

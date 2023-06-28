@@ -64,23 +64,26 @@ public class Main {
 
     public static HashMap<Integer, String> getCustomFilter(HashMap<Integer, HashSet<String>> crit_map) {
         HashMap<Integer, String> custom_filter_map = new HashMap<>(0);
-        Scanner sc = new Scanner(System.in, "cp866");
-        String str = "";
-        printNoteCriteria();
-        while (!str.equalsIgnoreCase("start")) {
-            System.out.print("Введите цифру критерия / Для начала поиска введите \"start\": ");
-            str = sc.nextLine();
-            int criteria_key = 0;
-            try {
-                criteria_key = Integer.parseInt(str);
-            } catch (Exception e) {
-            }
-            if (criteria_key > 0 && criteria_key < 9) {
-                System.out.println("В наличии следующие товары: ");
-                System.out.println(crit_map.get(criteria_key));
-                System.out.println("Введите наименование или выберите минимальное значение: ");
+        try (Scanner sc = new Scanner(System.in, "cp866")) {
+            String str = "";
+            printNoteCriteria();
+            while (!str.equalsIgnoreCase("start")) {
+                System.out.println(
+                        "После окончания выбора критериев и для начала поиска товара введите \"start\".");
+                System.out.print("Введите цифру критерия: ");
                 str = sc.nextLine();
-                custom_filter_map.put(criteria_key, str);
+                int criteria_key = 0;
+                try {
+                    criteria_key = Integer.parseInt(str);
+                } catch (Exception e) {
+                }
+                if (criteria_key > 0 && criteria_key < 9) {
+                    System.out.println("В наличии следующие товары: ");
+                    System.out.println(crit_map.get(criteria_key));
+                    System.out.println("Введите наименование или выберите минимальное значение: ");
+                    str = sc.nextLine();
+                    custom_filter_map.put(criteria_key, str.trim());
+                }
             }
         }
         return custom_filter_map;
